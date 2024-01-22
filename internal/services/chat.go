@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 	"log/slog"
 	"server/internal/dtos"
+	"sync"
 )
 
 type ChatChannel struct {
@@ -26,6 +27,7 @@ type Chat struct {
 	chatChannel ChatChannel
 	joinedUsers map[User]struct{}
 	messages    []Message
+	rwMutex     sync.RWMutex
 }
 
 func New(log *slog.Logger) *Chat {
@@ -44,15 +46,19 @@ func (c *Chat) Send(ctx context.Context, username, text, chatId string) error {
 
 	user := User{username: username}
 
+	c.rwMutex.RLock()
 	if _, ok := c.joinedUsers[user]; !ok {
 		return errors.New("user " + username + " is not joined")
 	}
+	c.rwMutex.RUnlock()
 
 	select {
 	case <-ctx.Done():
 		return nil
 	default:
+		c.rwMutex.Lock()
 		c.messages = append(c.messages, Message{user: user, text: text})
+		c.rwMutex.Unlock()
 	}
 
 	return nil
@@ -61,15 +67,19 @@ func (c *Chat) Send(ctx context.Context, username, text, chatId string) error {
 func (c *Chat) Join(ctx context.Context, username string) (string, error) {
 	user := User{username: username}
 
+	c.rwMutex.RLock()
 	if _, ok := c.joinedUsers[user]; ok {
 		return "", errors.New("user " + username + " is already joined")
 	}
+	c.rwMutex.RUnlock()
 
 	select {
 	case <-ctx.Done():
 		return "", nil
 	default:
+		c.rwMutex.Lock()
 		c.joinedUsers[user] = struct{}{}
+		c.rwMutex.Unlock()
 	}
 
 	return c.chatChannel.chatId, nil
@@ -82,15 +92,19 @@ func (c *Chat) Leave(ctx context.Context, username, chatId string) error {
 
 	user := User{username: username}
 
+	c.rwMutex.RLock()
 	if _, ok := c.joinedUsers[user]; !ok {
 		return errors.New("user " + username + " not joined before")
 	}
+	c.rwMutex.RUnlock()
 
 	select {
 	case <-ctx.Done():
 		return nil
 	default:
+		c.rwMutex.Lock()
 		delete(c.joinedUsers, user)
+		c.rwMutex.Unlock()
 	}
 
 	return nil
