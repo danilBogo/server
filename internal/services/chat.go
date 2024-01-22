@@ -47,10 +47,11 @@ func (c *Chat) Send(ctx context.Context, username, text, chatId string) error {
 	user := User{username: username}
 
 	c.rwMutex.RLock()
-	if _, ok := c.joinedUsers[user]; !ok {
+	_, ok := c.joinedUsers[user]
+	c.rwMutex.RUnlock()
+	if !ok {
 		return errors.New("user " + username + " is not joined")
 	}
-	c.rwMutex.RUnlock()
 
 	select {
 	case <-ctx.Done():
@@ -68,10 +69,11 @@ func (c *Chat) Join(ctx context.Context, username string) (string, error) {
 	user := User{username: username}
 
 	c.rwMutex.RLock()
-	if _, ok := c.joinedUsers[user]; ok {
+	_, ok := c.joinedUsers[user]
+	c.rwMutex.RUnlock()
+	if ok {
 		return "", errors.New("user " + username + " is already joined")
 	}
-	c.rwMutex.RUnlock()
 
 	select {
 	case <-ctx.Done():
@@ -93,10 +95,11 @@ func (c *Chat) Leave(ctx context.Context, username, chatId string) error {
 	user := User{username: username}
 
 	c.rwMutex.RLock()
-	if _, ok := c.joinedUsers[user]; !ok {
+	_, ok := c.joinedUsers[user]
+	c.rwMutex.RUnlock()
+	if !ok {
 		return errors.New("user " + username + " not joined before")
 	}
-	c.rwMutex.RUnlock()
 
 	select {
 	case <-ctx.Done():
