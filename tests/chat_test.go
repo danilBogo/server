@@ -8,7 +8,7 @@ import (
 	"log/slog"
 	"os"
 	"server/internal/app"
-	"server/internal/config"
+	"server/pkg/config"
 	"server/tests/suite"
 	"testing"
 )

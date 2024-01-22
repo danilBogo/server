@@ -6,7 +6,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"net"
-	"server/internal/config"
+	"server/pkg/config"
 	"strconv"
 	"testing"
 )

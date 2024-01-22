@@ -5,7 +5,7 @@ import (
 	"os"
 	"os/signal"
 	"server/internal/app"
-	"server/internal/config"
+	"server/pkg/config"
 	"syscall"
 )
 
