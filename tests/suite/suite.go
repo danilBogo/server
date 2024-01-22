@@ -2,7 +2,6 @@ package suite
 
 import (
 	"context"
-	"fmt"
 	chatv1 "github.com/danilBogo/protos/gen/go/chat"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -28,8 +27,6 @@ func New(t *testing.T) (context.Context, *Suite) {
 
 	cfg := config.MustLoad()
 
-	fmt.Println(cfg)
-
 	ctx, cancelCtx := context.WithTimeout(context.Background(), cfg.GRPC.Timeout)
 
 	t.Cleanup(func() {
@@ -43,8 +40,6 @@ func New(t *testing.T) (context.Context, *Suite) {
 	if err != nil {
 		t.Fatalf("grpc server connection failed: %v", err)
 	}
-
-	fmt.Println("SUCCESSFULLY CONNECTED")
 
 	return ctx, &Suite{
 		T:          t,
