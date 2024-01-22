@@ -3,10 +3,10 @@ package suite
 import (
 	"context"
 	chatv1 "github.com/danilBogo/protos/gen/go/chat"
+	"github.com/danilBogo/server/pkg/config"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"net"
-	"server/pkg/config"
 	"strconv"
 	"testing"
 )

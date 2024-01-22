@@ -1,11 +1,11 @@
 package main
 
 import (
+	"github.com/danilBogo/server/internal/app"
+	"github.com/danilBogo/server/pkg/config"
 	"log/slog"
 	"os"
 	"os/signal"
-	"server/internal/app"
-	"server/pkg/config"
 	"syscall"
 )
 

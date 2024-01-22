@@ -1,9 +1,9 @@
 package app
 
 import (
+	grpcapp "github.com/danilBogo/server/internal/app/grpc"
+	"github.com/danilBogo/server/internal/services"
 	"log/slog"
-	grpcapp "server/internal/app/grpc"
-	"server/internal/services"
 )
 
 type App struct {

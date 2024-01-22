@@ -2,10 +2,10 @@ package grpcapp
 
 import (
 	"fmt"
+	"github.com/danilBogo/server/internal/grpc/chat"
 	"google.golang.org/grpc"
 	"log/slog"
 	"net"
-	"server/internal/grpc/chat"
 )
 
 type App struct {

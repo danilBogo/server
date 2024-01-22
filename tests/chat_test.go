@@ -2,14 +2,14 @@ package tests
 
 import (
 	chatv1 "github.com/danilBogo/protos/gen/go/chat"
+	"github.com/danilBogo/server/internal/app"
+	"github.com/danilBogo/server/pkg/config"
+	"github.com/danilBogo/server/tests/suite"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"log/slog"
 	"os"
-	"server/internal/app"
-	"server/pkg/config"
-	"server/tests/suite"
 	"testing"
 )
 

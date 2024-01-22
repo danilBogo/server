@@ -3,11 +3,11 @@ package chat
 import (
 	"context"
 	chatv1 "github.com/danilBogo/protos/gen/go/chat"
+	"github.com/danilBogo/server/internal/dtos"
 	"github.com/golang/protobuf/ptypes/empty"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	"server/internal/dtos"
 )
 
 type Chat interface {

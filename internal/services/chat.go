@@ -3,9 +3,9 @@ package services
 import (
 	"context"
 	"errors"
+	"github.com/danilBogo/server/internal/dtos"
 	"github.com/google/uuid"
 	"log/slog"
-	"server/internal/dtos"
 	"sync"
 )
 

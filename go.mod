@@ -1,4 +1,4 @@
-module server
+module github.com/danilBogo/server
 
 go 1.21
 
